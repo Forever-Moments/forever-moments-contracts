@@ -16,6 +16,7 @@ node_modules
 
 # Scripts
 scripts/
+verify/
 
 # Assets
 assets/
