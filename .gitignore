@@ -19,3 +19,9 @@ scripts/
 
 # Assets
 assets/
+
+# Data
+data/
+
+# Contract Archive
+contracts/archive/

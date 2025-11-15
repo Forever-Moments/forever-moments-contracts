@@ -12,11 +12,12 @@ A decentralised social platform built on LUKSO that enables creators to mint, sh
 
 ## Smart Contracts
 
-- `MomentFactory.sol`: Core factory contract for minting Moments and managing Collections
-- `MomentMetadata.sol`: Handles metadata storage and updates for Moments
-- `LikesToken.sol`: LSP7 token implementation for social interactions
-- `MomentURD.sol`: Universal Receiver Delegate for handling likes and comments
-- `CollectionMemberships.sol`: Handles collection membership and permissions
+- **`MomentFactoryV2.sol`**: Factory contract for minting Moments as LSP8 tokens using minimal proxy pattern
+- **`MomentV2.sol`**: Implementation contract for Moment proxies with marketplace functionality
+- **`CollectionRegistry.sol`**: Registry for managing collections with different access types (Private, Open, TokenGated)
+- **`ICollectionRegistry.sol`**: Interface for the Collection Registry
+- **`LikesToken.sol`**: LSP7 token implementation for social interactions ($LIKES)
+- **`MomentURD.sol`**: Universal Receiver Delegate for handling likes and comments on Moments
 
 ## Prerequisites
 
