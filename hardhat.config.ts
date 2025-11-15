@@ -40,7 +40,7 @@ const config: HardhatUserConfig = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 1, // Optimize for size not gas efficiency
+        runs: 1, // Optimize for size
       }
     },
   },
