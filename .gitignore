@@ -16,7 +16,6 @@ node_modules
 
 # Scripts
 scripts/
-verify/
 
 # Assets
 assets/
@@ -26,3 +25,6 @@ data/
 
 # Contract Archive
 contracts/archive/
+
+# Verification
+verify/
