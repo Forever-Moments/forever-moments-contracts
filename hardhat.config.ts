@@ -18,7 +18,23 @@ const config: HardhatUserConfig = {
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },
-  
+
+  etherscan: {
+    apiKey: {
+      lukso_mainnet: 'empty'
+    },
+    customChains: [
+      {
+        network: "lukso_mainnet",
+        chainId: 42,
+        urls: {
+          apiURL: "https://explorer.execution.mainnet.lukso.network/api",
+          browserURL: "https://explorer.execution.mainnet.lukso.network"
+        }
+      }
+    ]
+  },
+
   solidity: {
     version: "0.8.20",
     settings: {
@@ -30,7 +46,7 @@ const config: HardhatUserConfig = {
   },
 
   sourcify: {
-    enabled: true,
+    enabled: false,
   },
 
   etherscan: {

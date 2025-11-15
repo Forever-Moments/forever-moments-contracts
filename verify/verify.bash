@@ -1,0 +1,9 @@
+# This script verifies the deployed contracts on BlockScout.
+# MOMENT_FACTORY
+npx hardhat verify --network lukso_mainnet 0x970dd88542C20941Be83F67784cfbde090f5Ce53 "Forever Moments" "MOMENT" "0x7dE347bE3EbAED43065182FcABA462796d6f2a83" "0x48656c6c6f" "0xEc5909814daCf7a1C49A1c6be02F6Ab8C3A7Ad3d"
+# MOMENT_URD
+npx hardhat verify --network lukso_mainnet 0xEc5909814daCf7a1C49A1c6be02F6Ab8C3A7Ad3d
+# LIKES_CONTRACT
+npx hardhat verify --network lukso_mainnet 0x403BfD53617555295347e0F7725CfdA480AB801e "LIKES Token" "LIKES" "0x7dE347bE3EbAED43065182FcABA462796d6f2a83" "0x7dE347bE3EbAED43065182FcABA462796d6f2a83" 2100000000 "0x48656c6c6f"
+# COLLECTION_MEMBERSHIPS
+npx hardhat verify --network lukso_mainnet 0x2124E2618a20059aC976cB05E78a31ac29f6E231 "0x970dd88542C20941Be83F67784cfbde090f5Ce53"
