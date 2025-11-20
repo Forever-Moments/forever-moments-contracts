@@ -1,30 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import {IERC725Y} from "@erc725/smart-contracts/contracts/interfaces/IERC725Y.sol";
-import {LSP6Utils} from "@lukso/lsp-smart-contracts/contracts/LSP6KeyManager/LSP6Utils.sol";
-import {LSP2Utils} from "@lukso/lsp2-contracts/contracts/LSP2Utils.sol";
+import { ILSP7DigitalAsset as ILSP7 } from "@lukso/lsp7-contracts/contracts/ILSP7DigitalAsset.sol";
 import {ICollectionRegistry} from "./ICollectionRegistry.sol";
 
-// LSP7 interface for LIKES token
-interface ILSP7 {
-    function transfer(
-        address from,
-        address to,
-        uint256 amount,
-        bool force,
-        bytes calldata data
-    ) external;
-}
+import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+
+import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import {LSP2Utils} from "@lukso/lsp2-contracts/contracts/LSP2Utils.sol";
+import {LSP6Utils} from "@lukso/lsp-smart-contracts/contracts/LSP6KeyManager/LSP6Utils.sol";
+
+import {
+    _LSP5_RECEIVED_ASSETS_ARRAY_KEY,
+    _LSP5_RECEIVED_ASSETS_MAP_KEY_PREFIX
+} from "@lukso/lsp5-contracts/contracts/LSP5Constants.sol";
 
 contract CollectionRegistry is ICollectionRegistry, Ownable {
     using EnumerableSet for EnumerableSet.AddressSet;
 
     // Constants
-    bytes32 private constant _LSP5_RECEIVED_ASSETS_ARRAY_KEY = 0x6460ee3c0aac563ccbf76d6e1d07bada78e3a9514e6382b736ed3f478ab7b90b;
-    bytes10 private constant _LSP5_RECEIVED_ASSETS_MAP_KEY_PREFIX = 0x812c4334633eb816c80d;
     address public constant LIKES_TOKEN = 0x403BfD53617555295347e0F7725CfdA480AB801e;
     address public immutable MOMENT_FACTORY;
 

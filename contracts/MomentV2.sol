@@ -20,6 +20,7 @@ import {_TYPEID_LSP0_VALUE_RECEIVED} from "@lukso/lsp0-contracts/contracts/LSP0C
 import {_PERMISSION_CHANGEOWNER, _LSP6KEY_ADDRESSPERMISSIONS_PERMISSIONS_PREFIX} from "@lukso/lsp-smart-contracts/contracts/LSP6KeyManager/LSP6Constants.sol";
 import {LSP2Utils} from "@lukso/lsp2-contracts/contracts/LSP2Utils.sol";
 import {LSP6Utils} from "@lukso/lsp-smart-contracts/contracts/LSP6KeyManager/LSP6Utils.sol";
+import { _TYPEID_LSP7_TOKENSRECIPIENT} from "@lukso/lsp7-contracts/contracts/LSP7Constants.sol";
 
 /**
  * @title MomentV2
