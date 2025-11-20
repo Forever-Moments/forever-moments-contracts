@@ -8,7 +8,7 @@ import {_LSP4_TOKEN_TYPE_COLLECTION, _LSP4_METADATA_KEY} from "@lukso/lsp-smart-
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import {MomentV2} from "./MomentV2.sol";
 import {ICollectionRegistry} from "./ICollectionRegistry.sol";
-
+import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
 
 contract MomentFactoryV2 is LSP8Mintable {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -16,10 +16,6 @@ contract MomentFactoryV2 is LSP8Mintable {
 
     // --- Constants
     address public constant LIKES_TOKEN = 0x403BfD53617555295347e0F7725CfdA480AB801e;
-    
-    // EIP-1167 minimal proxy bytecode
-    bytes private constant PROXY_BYTECODE = hex"3d602d80600a3d3981f3363d3d373d3d3d363d73";
-    bytes private constant PROXY_BYTECODE_SUFFIX = hex"5af43d82803e903d91602b57fd5bf3";
 
     // --- Events
     event MomentMinted(address indexed recipient, bytes32 indexed tokenId, address indexed collectionUP);
@@ -78,7 +74,7 @@ contract MomentFactoryV2 is LSP8Mintable {
         address collectionOwnerUP = collectionRegistry.getCollectionOwner(collectionUP);
 
         // Create minimal proxy for the Moment
-        address proxy = _createProxy(momentImplementation);
+        address proxy = Clones.clone(momentImplementation);
         
         // Initialize the proxy with Moment data
         MomentV2(proxy).initialize(
@@ -103,20 +99,6 @@ contract MomentFactoryV2 is LSP8Mintable {
         emit MomentMinted(recipient, tokenId, collectionUP);
 
         return tokenId;
-    }
-
-    function _createProxy(address implementation) internal returns (address proxy) {
-        bytes memory bytecode = abi.encodePacked(
-            PROXY_BYTECODE,
-            implementation,
-            PROXY_BYTECODE_SUFFIX
-        );
-        
-        assembly {
-            proxy := create(0, add(bytecode, 0x20), mload(bytecode))
-        }
-        
-        require(proxy != address(0), "Proxy creation failed");
     }
 
     function setMomentURD(address newURD) external onlyOwner {
