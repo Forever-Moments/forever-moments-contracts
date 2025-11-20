@@ -25,10 +25,15 @@ import {
     _INTERFACEID_LSP0,
     _TYPEID_LSP0_VALUE_RECEIVED
 } from "@lukso/lsp0-contracts/contracts/LSP0Constants.sol";
+import { _TYPEID_LSP7_TOKENSRECIPIENT} from "@lukso/lsp7-contracts/contracts/LSP7Constants.sol";
 
 contract MomentMetadata is ERC725Y, ILSP1UniversalReceiver {
     bytes32 public constant _MOMENT_METADATA_KEY = 0x3569795c73940696ea152d91d7bf7a2a1543fcf430ff086ba45e1de82f924e81;
-    bytes32 public constant TYPE_ID_LSP7_RECEIVED = 0x20804611b3e2ea21c480dc465142210acf4a2485947541770ec1fb87dee4a55c;
+    
+    bytes32 internal immutable _LSP1DELEGATE_ON_LSP7_TOKEN_RECEIVED_KEY = LSP2Utils.generateMappingKey(
+            _LSP1_UNIVERSAL_RECEIVER_DELEGATE_PREFIX,
+            bytes20(_TYPEID_LSP7_TOKENSRECIPIENT)
+        );
 
     LSP7DigitalAsset public likesToken;
     address public collectionOwner;
@@ -61,11 +66,7 @@ contract MomentMetadata is ERC725Y, ILSP1UniversalReceiver {
         likesToken = LSP7DigitalAsset(payable(_likesToken));
         collectionOwner = _collectionOwner;
 
-        bytes32 key = LSP2Utils.generateMappingKey(
-            _LSP1_UNIVERSAL_RECEIVER_DELEGATE_PREFIX,
-            bytes20(TYPE_ID_LSP7_RECEIVED)
-        );
-        _setData(key, abi.encodePacked(MOMENT_URD));
+        _setData(_LSP1DELEGATE_ON_LSP7_TOKEN_RECEIVED_KEY, abi.encodePacked(MOMENT_URD));
     }
 
     function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
