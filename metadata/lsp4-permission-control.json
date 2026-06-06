@@ -1,0 +1,30 @@
+{
+  "LSP4Metadata": {
+    "name": "Permission Control",
+    "description": "LSP8 collection for onchain LSP6 permission templates. Each minted token represents one immutable template version published by a Universal Profile (chain, permissions bitmap, allowed calls, allowed ERC725Y data keys, and metadata URI). Publishers pay a mint fee in LYX; the collection owner may update pricing and withdraw proceeds.",
+    "links": [
+      {
+        "title": "LUKSO docs — LSP4 Digital Asset Metadata",
+        "url": "https://docs.lukso.tech/standards/tokens/LSP4-Digital-Asset-Metadata"
+      },
+      {
+        "title": "LUKSO docs — LSP8 Identifiable Digital Asset",
+        "url": "https://docs.lukso.tech/standards/tokens/LSP8-Identifiable-Digital-Asset"
+      }
+    ],
+    "icon": [],
+    "images": [],
+    "attributes": [
+      {
+        "key": "type",
+        "value": "LSP8 NFT Collection",
+        "type": "string"
+      },
+      {
+        "key": "purpose",
+        "value": "Permission template registry (LSP6 templates as NFTs)",
+        "type": "string"
+      }
+    ]
+  }
+}

@@ -18,6 +18,7 @@ A decentralised social platform built on LUKSO that enables creators to mint, sh
 - **`ICollectionRegistry.sol`**: Interface for the Collection Registry
 - **`LikesToken.sol`**: LSP7 token implementation for social interactions ($LIKES)
 - **`MomentURD.sol`**: Universal Receiver Delegate for handling likes and comments on Moments
+- **`PermissionsOnchainTemplateRegistry.sol`**: ERC725Y-compatible registry for publishing immutable LSP6 permissions templates onchain (publisher must be a Universal Profile)
 
 ## Prerequisites
 

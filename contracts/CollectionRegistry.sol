@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.27;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
@@ -7,6 +7,7 @@ import {IERC725Y} from "@erc725/smart-contracts/contracts/interfaces/IERC725Y.so
 import {LSP6Utils} from "@lukso/lsp-smart-contracts/contracts/LSP6KeyManager/LSP6Utils.sol";
 import {LSP2Utils} from "@lukso/lsp2-contracts/contracts/LSP2Utils.sol";
 import {ICollectionRegistry} from "./ICollectionRegistry.sol";
+import {Constants} from "./Constants.sol";
 
 // LSP7 interface for LIKES token
 interface ILSP7 {
@@ -25,7 +26,6 @@ contract CollectionRegistry is ICollectionRegistry, Ownable {
     // Constants
     bytes32 private constant _LSP5_RECEIVED_ASSETS_ARRAY_KEY = 0x6460ee3c0aac563ccbf76d6e1d07bada78e3a9514e6382b736ed3f478ab7b90b;
     bytes10 private constant _LSP5_RECEIVED_ASSETS_MAP_KEY_PREFIX = 0x812c4334633eb816c80d;
-    address public constant LIKES_TOKEN = 0x403BfD53617555295347e0F7725CfdA480AB801e;
     address public immutable MOMENT_FACTORY;
 
     // Storage
@@ -87,9 +87,9 @@ contract CollectionRegistry is ICollectionRegistry, Ownable {
 
         if (currentCount >= 3) {
             uint256 collectionFee = 420 * 10**18; // 18 decimals
-            address platformTreasury = 0x7dE347bE3EbAED43065182FcABA462796d6f2a83;
+            address platformTreasury = Constants.PLATFORM_TREASURY;
 
-            ILSP7(LIKES_TOKEN).transfer(
+            ILSP7(Constants.LIKES_TOKEN).transfer(
                 msg.sender,
                 platformTreasury,
                 collectionFee,
@@ -219,7 +219,8 @@ contract CollectionRegistry is ICollectionRegistry, Ownable {
         }
 
         // Check based on collection type
-        if (collection.collectionType == CollectionType.Private) {
+        if (collection.collectionType == CollectionType.Private || 
+            collection.collectionType == CollectionType.EncryptedPrivate) {
             // Check LSP6 permissions
             return _hasLSP6Permission(collectionUP, user);
         } else if (collection.collectionType == CollectionType.Open) {
@@ -249,6 +250,27 @@ contract CollectionRegistry is ICollectionRegistry, Ownable {
 
     function getCollectionsByOwner(address owner) external view override returns (address[] memory) {
         return _ownerToCollections[owner].values();
+    }
+
+    function canDecrypt(address collectionUP, address user) external view returns (bool) {
+        if (_collections[collectionUP].owner == address(0)) {
+            return false;
+        }
+        
+        CollectionInfo memory collection = _collections[collectionUP];
+        
+        // Only applies to EncryptedPrivate collections
+        if (collection.collectionType != CollectionType.EncryptedPrivate) {
+            return false;
+        }
+        
+        // Owner can always decrypt
+        if (user == collection.owner) {
+            return true;
+        }
+        
+        // Check LSP6 permissions (same as canMint)
+        return _hasLSP6Permission(collectionUP, user);
     }
 
     // --- Internal Functions

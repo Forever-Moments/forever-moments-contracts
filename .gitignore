@@ -28,3 +28,6 @@ contracts/archive/
 
 # Verification
 verify/
+
+# Documentation (local notes and analysis)
+docs/
